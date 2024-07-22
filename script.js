@@ -1,6 +1,3 @@
-// Three.js by - https://github.com/mrdoob/three.js/
-// RoundedBoxGeometry by- https://github.com/pailhead/three-rounded-box
-
 const animationEngine = ( () => {
 
   let uniqueID = 0;
@@ -8,56 +5,39 @@ const animationEngine = ( () => {
   class AnimationEngine {
 
     constructor() {
-
       this.ids = [];
       this.animations = {};
       this.update = this.update.bind( this );
       this.raf = 0;
       this.time = 0;
-
     }
 
     update() {
-
       const now = performance.now();
       const delta = now - this.time;
       this.time = now;
-
       let i = this.ids.length;
-
       this.raf = i ? requestAnimationFrame( this.update ) : 0;
-
       while ( i-- )
         this.animations[ this.ids[ i ] ] && this.animations[ this.ids[ i ] ].update( delta );
-
     }
 
     add( animation ) {
-
       animation.id = uniqueID ++;
-
       this.ids.push( animation.id );
       this.animations[ animation.id ] = animation;
-
       if ( this.raf !== 0 ) return;
-
       this.time = performance.now();
       this.raf = requestAnimationFrame( this.update );
-
     }
 
     remove( animation ) {
-
       const index = this.ids.indexOf( animation.id );
-
       if ( index < 0 ) return;
-
       this.ids.splice( index, 1 );
       delete this.animations[ animation.id ];
       animation = null;
-
     }
-
   }
 
   return new AnimationEngine();
@@ -65,27 +45,16 @@ const animationEngine = ( () => {
 } )();
 
 class Animation {
-
   constructor( start ) {
-
     if ( start === true ) this.start();
-
   }
-
   start() {
-
     animationEngine.add( this );
-
   }
-
   stop() {
-
     animationEngine.remove( this );
-
   }
-
   update( delta ) {}
-
 }
 
 class World extends Animation {
@@ -127,9 +96,7 @@ class World extends Animation {
 
     this.width = this.container.offsetWidth;
     this.height = this.container.offsetHeight;
-
     this.renderer.setSize( this.width, this.height );
-
     this.camera.fov = this.fov;
     this.camera.aspect = this.width / this.height;
 
@@ -1795,7 +1762,7 @@ class Scrambler {
 
     this.game = game;
 
-    this.dificulty = 0;
+    this.difficulty = 0;
 
     this.scrambleLength = {
       2: [ 7, 9, 11 ],
@@ -1805,8 +1772,8 @@ class Scrambler {
     };
 
     this.moves = [];
-    this.conveted = [];
-    this.pring = '';
+    this.converted = [];
+    this.print = '';
 
   }
 
@@ -1817,7 +1784,7 @@ class Scrambler {
 
     if ( this.moves.length < 1 ) {
 
-      const scrambleLength = this.scrambleLength[ this.game.cube.size ][ this.dificulty ];
+      const scrambleLength = this.scrambleLength[ this.game.cube.size ][ this.difficulty ];
 
       const faces = this.game.cube.size < 4 ? 'UDLRFB' : 'UuDdLlRrFfBb';
       const modifiers = [ "", "'", "2" ];
@@ -2641,12 +2608,12 @@ class Preferences {
       } ),
 
       scramble: new Range( 'scramble', {
-        value: this.game.scrambler.dificulty,
+        value: this.game.scrambler.difficulty,
         range: [ 0, 2 ],
         step: 1,
         onUpdate: value => {
 
-          this.game.scrambler.dificulty = value;
+          this.game.scrambler.difficulty = value;
 
         },
         onComplete: () => this.game.storage.savePreferences()
@@ -2977,7 +2944,7 @@ class Scores {
     data.scores.push( time );
     data.solves++;
 
-    if ( data.scores.lenght > 100 ) data.scores.shift();
+    if ( data.scores.length > 100 ) data.scores.shift();
 
     let bestTime = false;    
 
@@ -3189,7 +3156,7 @@ class Storage {
 
       this.game.cube.size = parseInt( preferences.cubeSize );
       this.game.controls.flipConfig = parseInt( preferences.flipConfig );
-      this.game.scrambler.dificulty = parseInt( preferences.dificulty );
+      this.game.scrambler.difficulty = parseInt( preferences.difficulty );
 
       this.game.world.fov = parseFloat( preferences.fov );
       this.game.world.resize();
@@ -3203,7 +3170,7 @@ class Storage {
 
       this.game.cube.size = 3;
       this.game.controls.flipConfig = 0;
-      this.game.scrambler.dificulty = 1;
+      this.game.scrambler.difficulty = 1;
 
       this.game.world.fov = 10;
       this.game.world.resize();
@@ -3223,7 +3190,7 @@ class Storage {
     const preferences = {
       cubeSize: this.game.cube.size,
       flipConfig: this.game.controls.flipConfig,
-      dificulty: this.game.scrambler.dificulty,
+      difficulty: this.game.scrambler.difficulty,
       fov: this.game.world.fov,
       theme: this.game.themes.theme,
       colors: this.game.themes.colors,
