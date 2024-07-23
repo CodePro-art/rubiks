@@ -8,7 +8,6 @@ This is a 3D Rubik's Cube game developed using JavaScript and Three.js. It provi
 2. [How to Play](#how-to-play)
 3. [Tutorial](#tutorial)
 4. [Code Summary](#code-summary)
-5. [License](#license)
 
 ## Installation
 
@@ -70,6 +69,3 @@ This is a 3D Rubik's Cube game developed using JavaScript and Three.js. It provi
   * Contains the logic for creating and manipulating the Rubik's Cube.
   * src/controls.js: Manages the controls for rotating the cube and its faces.
 
-## License
-
-This project is licensed under the MIT License. See the LICENSE.txt file for more details.
